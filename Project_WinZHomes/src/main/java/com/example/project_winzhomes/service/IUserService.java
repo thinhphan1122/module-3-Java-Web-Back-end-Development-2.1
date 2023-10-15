@@ -9,5 +9,5 @@ public interface IUserService {
     boolean add(User user);
     User findById(int id);
     boolean  edit(User user);
-    boolean remove(int id);
+    void remove(int id);
 }

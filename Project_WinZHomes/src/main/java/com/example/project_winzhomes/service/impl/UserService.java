@@ -32,7 +32,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean remove(int id) {
-        return userDAO.remove(id);
+    public void remove(int id) {
+        userDAO.remove(id);
     }
 }

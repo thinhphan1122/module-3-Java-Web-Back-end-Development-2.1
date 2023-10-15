@@ -11,8 +11,10 @@ public class User {
     private String address;
     private String phoneNumber;
     private String email;
-//    private int roleId;
-    public User(int id, String username, String password, String fullName, String dateOfBirth, String nationalId, boolean gender, String address, String phoneNumber, String email) {
+    private int roleId;
+    private int roomId;
+
+    public User(int id, String username, String password, String fullName, String dateOfBirth, String nationalId, boolean gender, String address, String phoneNumber, String email, int roleId, int roomId) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -23,23 +25,11 @@ public class User {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.roleId = roleId;
+        this.roomId = roomId;
     }
 
-//    public User(int id, String username, String password, String fullName, String dateOfBirth, String nationalId, boolean gender, String address, String phoneNumber, String email, int roleId) {
-//        this.id = id;
-//        this.username = username;
-//        this.password = password;
-//        this.fullName = fullName;
-//        this.dateOfBirth = dateOfBirth;
-//        this.nationalId = nationalId;
-//        this.gender = gender;
-//        this.address = address;
-//        this.phoneNumber = phoneNumber;
-//        this.email = email;
-//        this.roleId = roleId;
-//    }
-
-    public User(String username, String password, String fullName, String dateOfBirth, String nationalId, boolean gender, String address, String phoneNumber, String email) {
+    public User(String username, String password, String fullName, String dateOfBirth, String nationalId, boolean gender, String address, String phoneNumber, String email, int roleId, int roomId) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
@@ -49,6 +39,8 @@ public class User {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.roleId = roleId;
+        this.roomId = roomId;
     }
 
     public int getId() {
@@ -129,5 +121,21 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
     }
 }

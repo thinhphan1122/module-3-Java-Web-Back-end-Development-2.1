@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO implements IUserDAO {
-    private static final String UPDATE_USERS_SQL = "update users set username = ?, `password` = ?, full_name = ?, date_of_birth = ?, national_id = ?, gender = ?, address = ?, phone_number = ?, email = ?, is_deleted = ? where id = ? ";
+    private static final String UPDATE_USERS_SQL = "update users set username = ?, `password` = ?, full_name = ?, date_of_birth = ?, national_id = ?, gender = ?, address = ?, phone_number = ?, email = ?, role_id = ?, room_id = ?, is_deleted = ? where id = ? ";
     private static final String SELECT_ALL = "select * from users where is_deleted = 0";
-    private static final String DELETE = "update users set is_deleted = 1 where id = ?";
+    private static final String REMOVE = "update users set is_deleted = 1 where id = ?";
     private static final String SELECT_BY_ID = "select * from users where id = ?";
-    private static final String INSERT = "INSERT INTO users(username, `password`, full_name, date_of_birth, national_id, gender, address, phone_number, email, is_deleted) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT = "INSERT INTO users(username, `password`, full_name, date_of_birth, national_id, gender, address, phone_number, email, role_id, room_id, is_deleted) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     @Override
     public List<User> findAll() {
@@ -37,7 +37,9 @@ public class UserDAO implements IUserDAO {
                 String address = resultSet.getString("address");
                 String phoneNumber = resultSet.getString("phone_number");
                 String email = resultSet.getString("email");
-                User user = new User(id, username, password, fullName, dateOfBirth, nationalId, gender, address, phoneNumber, email);
+                int roleId = Integer.parseInt(resultSet.getString("role_id"));
+                int roomId = Integer.parseInt(resultSet.getString("room_id"));
+                User user = new User(id, username, password, fullName, dateOfBirth, nationalId, gender, address, phoneNumber, email, roleId, roomId);
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -60,7 +62,9 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setString(7, user.getAddress());
             preparedStatement.setString(8, user.getPhoneNumber());
             preparedStatement.setString(9, user.getEmail());
-            preparedStatement.setBoolean(10, false);
+            preparedStatement.setInt(10, user.getRoleId());
+            preparedStatement.setInt(11, user.getRoomId());
+            preparedStatement.setBoolean(12, false);
             int num = preparedStatement.executeUpdate();
             return num == 1;
         } catch (SQLException e) {
@@ -84,8 +88,10 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setString(7, user.getAddress());
             preparedStatement.setString(8, user.getPhoneNumber());
             preparedStatement.setString(9, user.getEmail());
-            preparedStatement.setBoolean(10, false);
-            preparedStatement.setInt(11, user.getId());
+            preparedStatement.setInt(10, user.getRoleId());
+            preparedStatement.setInt(11, user.getRoomId());
+            preparedStatement.setBoolean(12, false);
+            preparedStatement.setInt(13, user.getId());
             userUpdated = preparedStatement.executeUpdate() > 0;
             return userUpdated;
         } catch (SQLException e) {
@@ -112,7 +118,9 @@ public class UserDAO implements IUserDAO {
                 String address = resultSet.getString("address");
                 String phoneNumber = resultSet.getString("phone_number");
                 String email = resultSet.getString("email");
-                user = new User(username, password, fullName, dateOfBirth, nationalId, gender, address, phoneNumber, email);
+                int roleId = Integer.parseInt(resultSet.getString("role_id"));
+                int roomId = Integer.parseInt(resultSet.getString("room_id"));
+                user = new User(id, username, password, fullName, dateOfBirth, nationalId, gender, address, phoneNumber, email, roleId, roomId);
             }
             return user;
         } catch (SQLException e) {
@@ -124,15 +132,14 @@ public class UserDAO implements IUserDAO {
     @Override
     public boolean remove(int id) {
         Connection connection = JDBCConnection.getConnection();
-        boolean userDeleted;
+        boolean userDeleted = false;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE);
+            PreparedStatement preparedStatement = connection.prepareStatement(REMOVE);
             preparedStatement.setInt(1, id);
             userDeleted = preparedStatement.executeUpdate() > 0;
-            return userDeleted;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return userDeleted;
     }
 }
