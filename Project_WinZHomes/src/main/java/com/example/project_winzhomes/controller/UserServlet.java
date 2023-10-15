@@ -68,7 +68,7 @@ public class UserServlet extends HttpServlet {
         }
 
         switch (action) {
-            case "create":
+            case "register":
                 displayAddForm(request, response);
                 break;
             case "edit":
@@ -85,7 +85,7 @@ public class UserServlet extends HttpServlet {
 
     private void displayAddForm(HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("user", userService.findAll());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("view/user/create.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("view/user/register.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
@@ -142,6 +142,7 @@ public class UserServlet extends HttpServlet {
 
         String password = request.getParameter("password");
         String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
         String fullName = request.getParameter("full_name");
         String dateOfBirth = request.getParameter("date_of_birth");
         String nationalId = request.getParameter("national_id");

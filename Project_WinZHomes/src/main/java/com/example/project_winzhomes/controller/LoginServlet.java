@@ -17,26 +17,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
-@WebServlet(name = "LoginServlet", urlPatterns = "/login")
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
     private IUserService userService = new UserService();
     private IRoleService roleService = new RoleService();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-        try {
-            request.setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         if (action == null) {
             action = "";
         }
-
         switch (action) {
             default:
                 loginAuthorize(request, response);
@@ -44,21 +37,28 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-        try {
-            request.setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         if (action == null) {
             action = "";
         }
-
         switch (action) {
+            case "register":
+                displayRegisterForm(request, response);
+            break;
             default:
                 login(request, response);
+        }
+    }
+
+    private void displayRegisterForm(HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("user", userService.findAll());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("view/user/register.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -79,14 +79,15 @@ public class LoginServlet extends HttpServlet {
         User currentUser = null;
         Role currentRole = null;
         for (User user : userService.findAll()) {
-            for (Role role : roleService.findAll()) {
-                if (user.getUsername().equals(username)) {
+            if (user.getUsername().equals(username)) {
+                for (Role role : roleService.findAll()) {
                     if (user.getRoleId() == role.getId()) {
                         currentUser = user;
                         currentRole = role;
                         break;
                     }
                 }
+                break;
             }
         }
 
@@ -122,6 +123,16 @@ public class LoginServlet extends HttpServlet {
                 } catch (ServletException | IOException e) {
                     throw new RuntimeException(e);
                 }
+            }
+        } else {
+            dispatcher = request.getRequestDispatcher("view/login.jsp");
+            message = "Wrong username or password!";
+            request.setAttribute("message", message);
+            request.setAttribute("loginCheck", loginCheck);
+            try {
+                dispatcher.forward(request, response);
+            } catch (ServletException | IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }

@@ -235,14 +235,14 @@
         <div class="form-group">
             <label for="exampleInputUsername1">Username</label>
             <input type="text" name="username" class="form-control" id="exampleInputUsername1" aria-describedby=""
-                   placeholder="Username" value="" disabled>
+                   placeholder="Username" value="${user.getUsername()}" disabled>
             <br>
         </div>
 
-        <div class="form-group">
+        <div class="user-box">
             <label for="exampleInputPassword1">Password</label>
             <input type="text" name="password" class="form-control" id="exampleInputPassword1"
-                   aria-describedby="passwordHelp" placeholder="${user.getPassword()}" value=""/>
+                   aria-describedby="passwordHelp" placeholder="" required/>
             <small id="passwordHelp" class="form-text text-muted">Never share password with anyone else.</small>
         </div>
         <br>
@@ -250,21 +250,21 @@
         <div class="form-group">
             <label for="exampleInputFullName1">Full Name</label>
             <input type="text" name="full_name" class="form-control" id="exampleInputFullName1" aria-describedby=""
-                   placeholder="Full Name"/>
+                   placeholder="Full Name" value="${user.getFullName()}"/>
             <br>
         </div>
 
         <div class="form-group">
             <label for="exampleInputDateOfBirth1">Date Of Birth</label>
             <input type="date" name="date_of_birth" class="form-control" id="exampleInputDateOfBirth1"
-                   aria-describedby="" placeholder="Date Of Birth"/>
+                   aria-describedby="" placeholder="Date Of Birth" value="${user.getDateOfBirth()}"/>
             <br>
         </div>
 
         <div class="form-group">
             <label for="exampleInputNationalId1">National ID</label>
             <input type="text" name="national_id" class="form-control" id="exampleInputNationalId1" aria-describedby=""
-                   placeholder="National ID"/>
+                   placeholder="National ID" value="${user.getNationalId()}"/>
             <br>
         </div>
 
@@ -289,28 +289,27 @@
         <div class="form-group">
             <label for="exampleInputAddress1">Address</label>
             <input type="text" name="address" class="form-control" id="exampleInputAddress1" aria-describedby=""
-                   placeholder="Address"/>
+                   placeholder="Address" value="${user.getAddress()}"/>
             <br>
         </div>
 
         <div class="form-group">
             <label for="exampleInputPhoneNumber1">Phone Number</label>
             <input type="text" name="phone_number" class="form-control" id="exampleInputPhoneNumber1"
-                   aria-describedby="" placeholder="Phone Number"/>
+                   aria-describedby="" placeholder="Phone Number" value="${user.getPhoneNumber()}"/>
             <br>
         </div>
 
         <div class="form-group">
             <label for="exampleInputEmail1">Email</label>
             <input type="text" name="email" class="form-control" id="exampleInputEmail1" aria-describedby=""
-                   placeholder="Email"/>
+                   placeholder="Email" value="${user.getEmail()}"/>
             <br>
         </div>
 
         <div class="input-container ic2">
             <label class="placeholder">Role</label>
             <select name="role_id" class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
                 <option value="2"></option>
                 <option value="1">Admin</option>
                 <option value="2">Customer</option>
@@ -339,7 +338,7 @@
             <button onclick="location.href = '/user';" class="btn btn-success btn-lg" type="button" value="cancel">
                 Cancel
             </button>
-            <button onclick="location.href = '/user';" class="btn btn-success btn-lg" type="submit" value="create">
+            <button class="btn btn-success btn-lg" type="submit" name="submit" value="submit">
                 Done
             </button>
         </div>

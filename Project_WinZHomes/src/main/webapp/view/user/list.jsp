@@ -252,7 +252,7 @@
 
 <h1>User</h1>
 <p>
-    <a href="/user?action=create">Create new user</a>
+    <a href="${pageContext.request.contextPath}/user?action=register">Create new user</a>
 </p>
 <table border="1" class="table mb-0 table-dark table-striped table-responsive">
     <thead class="small text-uppercase text-muted">
@@ -364,44 +364,49 @@
             <td style="align-content: center">
                 <c:if test="${user.getRoleId() != 1}">
                     <a href="${pageContext.request.contextPath}/user?action=remove&id=${user.getId()}"
-                       class="btn btn-danger">
+                       class="btn btn-danger" onclick="window.confirm('Cac')">
                         <span class="fa-solid fa-user-pen text-primary h4 m-auto"></span>
                         Remove
                     </a>
                 </c:if>
 
+                <script>
+                    function myConfirm() {
+                        confirm("Press a button!");
+                    }
+                </script>
                 <!-- Button trigger modal -->
-                    <%--                <c:if test="${user.getRoleId() != 1}">--%>
-                    <%--                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">--%>
-                    <%--                        Remove--%>
-                    <%--                    </button>--%>
-                    <%--                </c:if>--%>
+<%--                                    <c:if test="${user.getRoleId() != 1}">--%>
+<%--                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="confirmRemove()">--%>
+<%--                                            Remove--%>
+<%--                                        </button>--%>
+<%--                                    </c:if>--%>
 
-                    <%--                <!-- Modal -->--%>
-                    <%--                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"--%>
-                    <%--                     aria-hidden="true">--%>
-                    <%--                    <div class="modal-dialog">--%>
-                    <%--                        <div class="modal-content">--%>
-                    <%--                            <div class="modal-header">--%>
-                    <%--                                <h1 class="modal-title fs-5" id="exampleModalLabel" style="color: black">Remove</h1>--%>
-                    <%--                                <button type="button" class="btn-close" data-bs-dismiss="modal"--%>
-                    <%--                                        aria-label="Close"></button>--%>
-                    <%--                            </div>--%>
-                    <%--                            <div class="modal-body">--%>
-                    <%--                                <p style="color: black">Are you sure that you want to remove this user?</p>--%>
-                    <%--                            </div>--%>
-                    <%--                            <div class="modal-footer">--%>
-                    <%--                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>--%>
+                                    <!-- Modal -->
+<%--                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"--%>
+<%--                                         aria-hidden="true">--%>
+<%--                                        <div class="modal-dialog">--%>
+<%--                                            <div class="modal-content">--%>
+<%--                                                <div class="modal-header">--%>
+<%--                                                    <h1 class="modal-title fs-5" id="exampleModalLabel" style="color: black">Remove</h1>--%>
+<%--                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"--%>
+<%--                                                            aria-label="Close"></button>--%>
+<%--                                                </div>--%>
+<%--                                                <div class="modal-body">--%>
+<%--                                                    <p style="color: black">Are you sure that you want to remove this user?</p>--%>
+<%--                                                </div>--%>
+<%--                                                <div class="modal-footer">--%>
+<%--                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>--%>
 
-                    <%--                                <a href="${pageContext.request.contextPath}/user?action=remove&id=${user.getId()}">--%>
-                    <%--                                    <button type="submit" class="btn btn-danger">--%>
-                    <%--                                        Confirm--%>
-                    <%--                                    </button>--%>
-                    <%--                                </a>--%>
-                    <%--                            </div>--%>
-                    <%--                        </div>--%>
-                    <%--                    </div>--%>
-                    <%--                </div>--%>
+<%--                                                    <a href="${pageContext.request.contextPath}/user?action=remove&id=${user.getId()}">--%>
+<%--                                                        <button type="submit" class="btn btn-danger">--%>
+<%--                                                            Confirm--%>
+<%--                                                        </button>--%>
+<%--                                                    </a>--%>
+<%--                                                </div>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
             </td>
         </tr>
     </c:forEach>

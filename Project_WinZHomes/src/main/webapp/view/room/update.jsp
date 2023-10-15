@@ -12,7 +12,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="for" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="for" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -90,7 +90,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/room">Room List</a></li>
-                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/User">User List</a></li>
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/user">User List</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
