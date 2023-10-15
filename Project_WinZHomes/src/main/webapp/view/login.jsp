@@ -201,7 +201,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page"
-                       href="${pageContext.request.contextPath}/index.jsp">Home</a>
+                       href="https://www.google.com/">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Link</a>
@@ -235,7 +235,7 @@
                 Login
             </button>
         </a>
-        <a href="/login?action=register">Not registered? Create an account</a>
+        <a href="${pageContext.request.contextPath}/login?action=register">Not registered? Create an account</a>
     </form>
 </div>
 </body>

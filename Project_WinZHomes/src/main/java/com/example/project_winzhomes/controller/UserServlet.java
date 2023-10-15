@@ -68,8 +68,8 @@ public class UserServlet extends HttpServlet {
         }
 
         switch (action) {
-            case "register":
-                displayAddForm(request, response);
+            case "create":
+                displayCreateForm(request, response);
                 break;
             case "edit":
                 displayEditForm(request, response);
@@ -83,9 +83,9 @@ public class UserServlet extends HttpServlet {
         }
     }
 
-    private void displayAddForm(HttpServletRequest request, HttpServletResponse response) {
+    private void displayCreateForm(HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("user", userService.findAll());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("view/user/register.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("view/user/create.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {

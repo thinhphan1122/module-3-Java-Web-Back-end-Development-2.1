@@ -31,6 +31,9 @@ public class LoginServlet extends HttpServlet {
             action = "";
         }
         switch (action) {
+            case "register":
+                register(request, response);
+                break;
             default:
                 loginAuthorize(request, response);
         }
@@ -54,10 +57,42 @@ public class LoginServlet extends HttpServlet {
 
     private void displayRegisterForm(HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("user", userService.findAll());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("view/user/register.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("view/register.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void register(HttpServletRequest request, HttpServletResponse response) {
+        String username = request.getParameter("username");
+
+        String password = request.getParameter("password");
+        String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
+        String fullName = request.getParameter("full_name");
+        String dateOfBirth = request.getParameter("date_of_birth");
+        String nationalId = request.getParameter("national_id");
+        boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
+        String address = request.getParameter("address");
+        String phoneNumber = request.getParameter("phone_number");
+        String email = request.getParameter("email");
+        int roleId = 2;
+        int roomId = 1;
+
+        User user = new User(username, hashPassword, fullName, dateOfBirth, nationalId, gender, address, phoneNumber, email, roleId, roomId);
+        boolean check = userService.add(user);
+        String message = "Add new user successfully!";
+
+        if (!check) {
+            message = "Add new user failed!";
+        }
+
+        request.setAttribute("message", message);
+        try {
+            response.sendRedirect(request.getContextPath() + "/login");
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
