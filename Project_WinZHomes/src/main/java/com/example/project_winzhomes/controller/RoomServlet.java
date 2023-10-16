@@ -153,9 +153,6 @@ public class RoomServlet extends HttpServlet {
         request.setAttribute("user", userService.findById(id));
         User user = userService.findById(id);
 
-
-        request.setAttribute("room", roomService.findById(1));
-
         int newUserRoomId = Integer.parseInt(request.getParameter("room_id"));
 
 //        String roomName = request.getParameter("room_name"); //cần sửa room_name = null

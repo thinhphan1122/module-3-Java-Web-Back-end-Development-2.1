@@ -20,11 +20,11 @@ import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
-    private IUserService userService = new UserService();
-    private IRoleService roleService = new RoleService();
+    private final IUserService userService = new UserService();
+    private final IRoleService roleService = new RoleService();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         if (action == null) {
@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         if (action == null) {
@@ -102,7 +102,7 @@ public class LoginServlet extends HttpServlet {
         try {
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -126,6 +126,7 @@ public class LoginServlet extends HttpServlet {
             }
         }
 
+        assert currentUser != null;
         boolean passwordCheck = BCrypt.checkpw(password, currentUser.getPassword());
         String message;
         RequestDispatcher dispatcher;
