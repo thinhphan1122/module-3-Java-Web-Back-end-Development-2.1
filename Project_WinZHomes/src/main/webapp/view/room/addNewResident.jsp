@@ -1,13 +1,17 @@
-<%@ page import="com.example.project_winzhomes.service.impl.UserService" %>
 <%@ page import="com.example.project_winzhomes.service.impl.BuildingService" %>
-<%@ page import="com.example.project_winzhomes.service.impl.RoomService" %><%--
+<%@ page import="com.example.project_winzhomes.service.impl.BuildingTypeService" %>
+<%@ page import="com.example.project_winzhomes.service.impl.RoomTypeService" %>
+<%@ page import="com.example.project_winzhomes.service.impl.RoomService" %>
+<%@ page import="com.example.project_winzhomes.service.impl.UserService" %>
+<%@ page import="com.example.project_winzhomes.service.impl.RoleService" %><%--
   Created by IntelliJ IDEA.
   User: Something
-  Date: 15-Oct-23
-  Time: 1:12 PM
+  Date: 05-Oct-23
+  Time: 10:26 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -15,169 +19,167 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
-    <title>Resident</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <title>User</title>
     <style>
-        .site-footer
-        {
-            background-color:#26272b;
-            padding:45px 0 20px;
-            font-size:15px;
-            line-height:24px;
-            color:#737373;
+        .site-footer {
+            background-color: #26272b;
+            padding: 45px 0 20px;
+            font-size: 15px;
+            line-height: 24px;
+            color: #737373;
         }
-        .site-footer hr
-        {
-            border-top-color:#bbb;
-            opacity:0.5
+
+        .site-footer hr {
+            border-top-color: #bbb;
+            opacity: 0.5
         }
-        .site-footer hr.small
-        {
-            margin:20px 0
+
+        .site-footer hr.small {
+            margin: 20px 0
         }
-        .site-footer h6
-        {
-            color:#fff;
-            font-size:16px;
-            text-transform:uppercase;
-            margin-top:5px;
-            letter-spacing:2px
+
+        .site-footer h6 {
+            color: #fff;
+            font-size: 16px;
+            text-transform: uppercase;
+            margin-top: 5px;
+            letter-spacing: 2px
         }
-        .site-footer a
-        {
-            color:#737373;
+
+        .site-footer a {
+            color: #737373;
         }
-        .site-footer a:hover
-        {
-            color:#3366cc;
-            text-decoration:none;
+
+        .site-footer a:hover {
+            color: #3366cc;
+            text-decoration: none;
         }
-        .footer-links
-        {
-            padding-left:0;
-            list-style:none
+
+        .footer-links {
+            padding-left: 0;
+            list-style: none
         }
-        .footer-links li
-        {
-            display:block
+
+        .footer-links li {
+            display: block
         }
-        .footer-links a
-        {
-            color:#737373
+
+        .footer-links a {
+            color: #737373
         }
-        .footer-links a:active,.footer-links a:focus,.footer-links a:hover
-        {
-            color:#3366cc;
-            text-decoration:none;
+
+        .footer-links a:active, .footer-links a:focus, .footer-links a:hover {
+            color: #3366cc;
+            text-decoration: none;
         }
-        .footer-links.inline li
-        {
-            display:inline-block
+
+        .footer-links.inline li {
+            display: inline-block
         }
-        .site-footer .social-icons
-        {
-            text-align:right
+
+        .site-footer .social-icons {
+            text-align: right
         }
-        .site-footer .social-icons a
-        {
-            width:40px;
-            height:40px;
-            line-height:40px;
-            margin-left:6px;
-            margin-right:0;
-            border-radius:100%;
-            background-color:#33353d
+
+        .site-footer .social-icons a {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            margin-left: 6px;
+            margin-right: 0;
+            border-radius: 100%;
+            background-color: #33353d
         }
-        .copyright-text
-        {
-            margin:0
+
+        .copyright-text {
+            margin: 0
         }
-        @media (max-width:991px)
-        {
-            .site-footer [class^=col-]
-            {
-                margin-bottom:30px
+
+        @media (max-width: 991px) {
+            .site-footer [class^=col-] {
+                margin-bottom: 30px
             }
         }
-        @media (max-width:767px)
-        {
-            .site-footer
-            {
-                padding-bottom:0
+
+        @media (max-width: 767px) {
+            .site-footer {
+                padding-bottom: 0
             }
-            .site-footer .copyright-text,.site-footer .social-icons
-            {
-                text-align:center
+
+            .site-footer .copyright-text, .site-footer .social-icons {
+                text-align: center
             }
         }
-        .social-icons
-        {
-            padding-left:0;
-            margin-bottom:0;
-            list-style:none
+
+        .social-icons {
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none
         }
-        .social-icons li
-        {
-            display:inline-block;
-            margin-bottom:4px
+
+        .social-icons li {
+            display: inline-block;
+            margin-bottom: 4px
         }
-        .social-icons li.title
-        {
-            margin-right:15px;
-            text-transform:uppercase;
-            color:#96a2b2;
-            font-weight:700;
-            font-size:13px
+
+        .social-icons li.title {
+            margin-right: 15px;
+            text-transform: uppercase;
+            color: #96a2b2;
+            font-weight: 700;
+            font-size: 13px
         }
-        .social-icons a{
-            background-color:#eceeef;
-            color:#818a91;
-            font-size:16px;
-            display:inline-block;
-            line-height:44px;
-            width:44px;
-            height:44px;
-            text-align:center;
-            margin-right:8px;
-            border-radius:100%;
-            -webkit-transition:all .2s linear;
-            -o-transition:all .2s linear;
-            transition:all .2s linear
+
+        .social-icons a {
+            background-color: #eceeef;
+            color: #818a91;
+            font-size: 16px;
+            display: inline-block;
+            line-height: 44px;
+            width: 44px;
+            height: 44px;
+            text-align: center;
+            margin-right: 8px;
+            border-radius: 100%;
+            -webkit-transition: all .2s linear;
+            -o-transition: all .2s linear;
+            transition: all .2s linear
         }
-        .social-icons a:active,.social-icons a:focus,.social-icons a:hover
-        {
-            color:#fff;
-            background-color:#29aafe
+
+        .social-icons a:active, .social-icons a:focus, .social-icons a:hover {
+            color: #fff;
+            background-color: #29aafe
         }
-        .social-icons.size-sm a
-        {
-            line-height:34px;
-            height:34px;
-            width:34px;
-            font-size:14px
+
+        .social-icons.size-sm a {
+            line-height: 34px;
+            height: 34px;
+            width: 34px;
+            font-size: 14px
         }
-        .social-icons a.facebook:hover
-        {
-            background-color:#3b5998
+
+        .social-icons a.facebook:hover {
+            background-color: #3b5998
         }
-        .social-icons a.twitter:hover
-        {
-            background-color:#00aced
+
+        .social-icons a.twitter:hover {
+            background-color: #00aced
         }
-        .social-icons a.linkedin:hover
-        {
-            background-color:#007bb6
+
+        .social-icons a.linkedin:hover {
+            background-color: #007bb6
         }
-        .social-icons a.dribbble:hover
-        {
-            background-color:#ea4c89
+
+        .social-icons a.dribbble:hover {
+            background-color: #ea4c89
         }
-        @media (max-width:767px)
-        {
-            .social-icons li.title
-            {
-                display:block;
-                margin-right:0;
-                font-weight:600
+
+        @media (max-width: 767px) {
+            .social-icons li.title {
+                display: block;
+                margin-right: 0;
+                font-weight: 600
             }
         }
 
@@ -212,14 +214,19 @@
     </style>
 </head>
 <body>
-
 <%
-    UserService userService = new UserService();
     BuildingService buildingService = new BuildingService();
+    BuildingTypeService buildingTypeService = new BuildingTypeService();
     RoomService roomService = new RoomService();
-    request.setAttribute("users", userService.findAll());
+    RoomTypeService roomTypeService = new RoomTypeService();
+    UserService userService = new UserService();
+    RoleService roleService = new RoleService();
     request.setAttribute("buildings", buildingService.findALL());
+    request.setAttribute("buildingTypes", buildingTypeService.findALL());
     request.setAttribute("rooms", roomService.findAll());
+    request.setAttribute("roomTypes", roomTypeService.findAll());
+    request.setAttribute("users", userService.findAll());
+    request.setAttribute("roles", roleService.findAll());
 %>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -251,9 +258,6 @@
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Log Out</a></li>
                     </ul>
                 </li>
-                <%--                <li class="nav-item">--%>
-                <%--                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>--%>
-                <%--                </li>--%>
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -263,6 +267,7 @@
     </div>
 </nav>
 
+<h1>User</h1>
 <table border="1" class="table mb-0 table-dark table-striped table-responsive">
     <thead class="small text-uppercase text-muted">
     <tr>
@@ -281,13 +286,15 @@
         <td>Room Type</td>
         <td>Building</td>
         <td>Building Type</td>
-        <td>Edit</td>
-        <td>Delete</td>
+        <td>Add</td>
     </tr>
     </thead>
     <tbody>
+    <label>
+        <input type="text" name="room_id" value="${room.getId()}">
+    </label>
     <c:forEach items='${requestScope["users"]}' var="user">
-        <c:if test="${user.getRoomId() != room.getId()}">
+        <c:if test="${room.getId() != user.getRoomId()}">
             <tr class="align-middle">
                 <td id="user_id">${user.getId()}</td>
 
@@ -300,7 +307,11 @@
 
                 <td>${user.getUsername()}</td>
 
-                <td><span class="d-inline-block align-middle">${user.getFullName()}</span></td>
+                <td>
+                    <span class="d-inline-block align-middle">
+                            ${user.getFullName()}
+                    </span>
+                </td>
 
                 <td>${user.getDateOfBirth()}</td>
                 <td>${user.getNationalId()}</td>
@@ -325,6 +336,7 @@
                         <td>${room.getRoomName()}</td>
                     </c:if>
                 </c:forEach>
+
 
                 <c:forEach var="room" items="${rooms}">
                     <c:forEach var="roomType" items="${roomTypes}">
@@ -352,17 +364,12 @@
                     </c:forEach>
                 </c:forEach>
 
-                <c:forEach var="building" items="${buildings}">
-                    <c:if test="${(room.getId() == user.getRoomId()) and (room.getBuildingId() == building.getId())}">
-                        <td>${building.getBuildingName()}</td>
-                    </c:if>
-                </c:forEach>
-
                 <td style="align-content: center">
-                    <a href="${pageContext.request.contextPath}/user?action=edit&id=${user.getId()}"
-                       class="btn btn-secondary">
-                        <span class="fa-solid fa-user-pen text-primary h4 m-auto"></span>
-                        Edit
+                    <a href="${pageContext.request.contextPath}/room?action=addResident&id=${user.getId()}">
+                        <button class="btn btn-secondary" type="submit">
+                            <span class="fa-solid fa-user-pen text-primary h4 m-auto"></span>
+                            Add
+                        </button>
                     </a>
                 </td>
             </tr>
@@ -370,6 +377,9 @@
     </c:forEach>
     </tbody>
 </table>
+<br>
+<br>
+<br>
 <!-- Site footer -->
 <footer class="site-footer">
     <div class="container">

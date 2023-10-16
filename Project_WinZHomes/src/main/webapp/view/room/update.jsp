@@ -339,6 +339,7 @@
                     <c:forEach var="room" items="${rooms}">
                         <c:if test="${room.getId() == user.getRoomId()}">
                             <td>${room.getRoomName()}</td>
+<%--                            <input type="hidden" name="room_name" value="<%= request.getParameter("room_name") %>" />--%>
                         </c:if>
                     </c:forEach>
 
@@ -430,12 +431,7 @@
         </tbody>
     </table>
 </div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+<br><br><br><br><br><br>
 
 <!-- Site footer -->
 <footer class="site-footer">

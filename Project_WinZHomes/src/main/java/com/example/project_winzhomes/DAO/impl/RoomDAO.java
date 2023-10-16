@@ -18,7 +18,7 @@ public class RoomDAO implements IRoomDAO {
     private static final String SELECT_BY_ID = "select * from rooms where id = ?";
     private static final String UPDATE_ROOMS_SQL = "update rooms set room_name = ?, room_type_id = ?, building_id = ?, number_of_resident = ? where id =?";
     private static final String REMOVE_RESIDENT = "update users set room_id = 1 where id = ?";
-    private static final String ADD_RESIDENT = "update users set room_id = ? where id = ?";
+    private static final String ADD_RESIDENT = "update users set room_id = ? where id = ?"; //cần sửa
 
     @Override
     public List<Room> findAll() {
@@ -91,14 +91,14 @@ public class RoomDAO implements IRoomDAO {
         return false;
     }
 
+    //Cần sừa
     @Override
     public boolean addResident(int id) {
-        UserService userService = new UserService();
         Connection connection = JDBCConnection.getConnection();
         boolean residentAdded = false;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(ADD_RESIDENT);
-            preparedStatement.setInt(1, 1);
+            preparedStatement.setInt(1, id);
             preparedStatement.setInt(2, id);
             residentAdded = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {

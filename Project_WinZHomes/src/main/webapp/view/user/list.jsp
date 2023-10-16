@@ -370,11 +370,6 @@
                     </a>
                 </c:if>
 
-                <script>
-                    function myConfirm() {
-                        confirm("Press a button!");
-                    }
-                </script>
                 <!-- Button trigger modal -->
 <%--                                    <c:if test="${user.getRoleId() != 1}">--%>
 <%--                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="confirmRemove()">--%>

@@ -21,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
@@ -46,8 +47,8 @@ public class RoomServlet extends HttpServlet {
             action = "";
         }
         switch (action) {
-            case "create":
-
+            case "addNewResident":
+                addResident(request, response);
                 break;
             case "update":
                 updateRoomInfo(request, response);
@@ -61,6 +62,7 @@ public class RoomServlet extends HttpServlet {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
+
         String action = request.getParameter("action");
 
         if (action == null) {
@@ -89,7 +91,7 @@ public class RoomServlet extends HttpServlet {
     private void displayAddResidentList(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         request.setAttribute("room", roomService.findById(id));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("view/room/resident.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("view/room/addNewResident.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
@@ -126,7 +128,7 @@ public class RoomServlet extends HttpServlet {
         int numberOfResident = 0;
         for (User user : userService.findAll()) {
             if (user.getRoomId() == room.getId()) {
-                numberOfResident+=1;
+                numberOfResident += 1;
             }
             room.setNumberOfResident(numberOfResident);
         }
@@ -146,15 +148,38 @@ public class RoomServlet extends HttpServlet {
         }
     }
 
-    private void addResident(HttpServletRequest request, HttpServletResponse response) {
+    private boolean addResident(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        roomService.addResident(id);
-        request.setAttribute("user", userService.findAll());
+        request.setAttribute("user", userService.findById(id));
+        User user = userService.findById(id);
+
+
+        request.setAttribute("room", roomService.findById(1));
+
+        int newUserRoomId = Integer.parseInt(request.getParameter("room_id"));
+
+//        String roomName = request.getParameter("room_name"); //cần sửa room_name = null
+        for (Room room : roomService.findAll()) {
+            if(newUserRoomId == room.getId()){
+                user.setRoomId(newUserRoomId);
+                break;
+            }
+        }
+
+        boolean check = userService.edit(user);
+        String message = "Update successfully!";
+        if (!check) {
+            message = "Update failed!";
+        }
+        request.setAttribute("message", message);
+        request.setAttribute("check", check);
+
         try {
-            response.sendRedirect("/room?action=update&id" + id);
+            response.sendRedirect("/room");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return false;
     }
 
     private void removeUser(HttpServletRequest request, HttpServletResponse response) {
